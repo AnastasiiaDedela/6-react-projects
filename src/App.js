@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './index.scss';
 
 const questions = [
@@ -16,43 +17,71 @@ const questions = [
     variants: [
       'Это простой HTML',
       'Это функция',
-      'Это тот же HTML, но с возможностью выполнять JS-код',
+      'Это тот же HTML, но c возможностью выполнять JS-код',
     ],
     correct: 2,
   },
 ];
 
-function Result() {
+function Result({ correctAnswers, setStep, setCorrectAnswers }) {
   return (
     <div className="result">
       <img src="https://cdn-icons-png.flaticon.com/512/2278/2278992.png" />
-      <h2>Вы отгадали 3 ответа из 10</h2>
-      <button>Попробовать снова</button>
+      <h2>{`Вы отгадали ${correctAnswers} ответа из ${questions.length}`} </h2>
+      <button
+        onClick={() => {
+          setStep(0);
+          setCorrectAnswers(0);
+        }}>
+        Попробовать снова
+      </button>
     </div>
   );
 }
 
-function Game() {
+function Game({ question, onClickVariant, step }) {
+  const percentage = Math.round((step / questions.length) * 100);
+  console.log(percentage);
   return (
     <>
       <div className="progress">
-        <div style={{ width: '50%' }} className="progress__inner"></div>
+        <div style={{ width: `${percentage}%` }} className="progress__inner"></div>
       </div>
-      <h1>Что такое useState?</h1>
+      <h1>{question.title}</h1>
       <ul>
-        <li>Это функция для хранения данных компонента</li>
-        <li>Это глобальный стейт</li>
-        <li>Это когда на ты никому не нужен</li>
+        {question.variants.map((variant, index) => (
+          <li key={variant} onClick={() => onClickVariant(index)}>
+            {variant}
+          </li>
+        ))}
       </ul>
     </>
   );
 }
 
 function App() {
+  const [step, setStep] = useState(0);
+  const question = questions[step];
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+
+  const onClickVariant = (index) => {
+    if (index === question.correct) {
+      setCorrectAnswers(correctAnswers + 1);
+    }
+    setStep(step + 1);
+  };
+
   return (
     <div className="App">
-      <Game />
-      {/* <Result /> */}
+      {step !== questions.length ? (
+        <Game step={step} question={question} onClickVariant={onClickVariant} />
+      ) : (
+        <Result
+          correctAnswers={correctAnswers}
+          setCorrectAnswers={setCorrectAnswers}
+          setStep={setStep}
+        />
+      )}
     </div>
   );
 }
