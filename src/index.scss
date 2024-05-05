@@ -17,22 +17,32 @@ body {
   padding: 50px;
   width: 100%;
   max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
 }
 
 h1 {
   font-family: 'Merriweather', serif;
+  text-align: center;
 }
 
 .tags {
   list-style: none;
   padding: 0;
+  display: flex;
+  column-gap: 10px;
+  row-gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0;
 
   li {
     display: inline-block;
     padding: 12px 18px;
     background-color: #fff;
     border-radius: 10px;
-    margin-right: 10px;
     cursor: pointer;
     font-weight: 500;
     font-size: 18px;
@@ -118,6 +128,9 @@ h1 {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 17px;
+  column-gap: 15px;
 }
 
 .search-input {
@@ -138,8 +151,11 @@ h1 {
 .pagination {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   li {
     display: inline-block;
